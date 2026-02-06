@@ -1,0 +1,1 @@
+This project provisions AWS infrastructure using Terraform: a VPC, subnet, security group, EC2 instance, IAM role & policy, and an ECR repository. The EC2 instance installs Docker & AWS CLI via a user_data script, pulls a Docker image from Docker Hub, and pushes it to ECR automatically.
