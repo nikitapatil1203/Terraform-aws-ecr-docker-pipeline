@@ -18,6 +18,7 @@ resource "aws_subnet" "subnet" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
+  map_public_ip_on_launch = true
 }
 
 resource "aws_route_table_association" "attach_subnet" {
@@ -48,11 +49,16 @@ resource "aws_instance" "my_instance" {
   ami                         = "ami-0b6c6ebed2801a5cb"
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.subnet.id
-  security_groups             = [aws_security_group.security_group.id]
+  vpc_security_group_ids      = [aws_security_group.security_group.id]
   key_name                    = "NIKITAPATIL"
   associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.id
+  iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.name
   user_data                   = file("docker_connect.sh")
+
+  depends_on = [
+    aws_iam_role_policy_attachment.role-policy-attach,
+    aws_ecr_repository.my_repository
+  ]
 }
 
 
