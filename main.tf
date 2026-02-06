@@ -50,7 +50,7 @@ resource "aws_instance" "my_instance" {
   instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.subnet.id
   vpc_security_group_ids      = [aws_security_group.security_group.id]
-  key_name                    = "NIKITAPATIL"
+  key_name                    = "*********"
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.ec2_instance_profile.name
   user_data                   = file("docker_connect.sh")
